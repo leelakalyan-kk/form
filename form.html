@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 130%;
+            background-color: lightcyan;
+        }
+
+        .wrapper {
+            width: 550px;
+            margin: 10px 0 0 450px;
+            border: 5px solid black;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: gainsboro;
+        }
+
+        label {
+            width: 200px;
+            float: left;
+            position: relative;
+            top: 12px;
+        }
+
+        input {
+            width: 320px;
+            font-size: 25px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px 5px 12px 5px;
+        }
+
+        .formelement {
+            margin-bottom: 10px;
+        }
+
+        #submitbutton {
+            width: 500px;
+            margin-left: 500px;
+            margin-top: 10px;
+        }
+
+        #error {
+            color: red;
+            font-size: 15px;
+            margin-left: 435px;
+            margin-top: 10px;
+            background-color: lightgreen;
+            border: 1px solid black;
+            width: 600px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="error"></div>
+    <div class="wrapper">
+        <h1 style="text-align: center;">SignUp Form</h1>
+        <div class="formelement">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" required>
+        </div>
+        <div class="formelement">
+            <label for="Email">Email *</label>
+            <input type="email" id="Email" name="Email" required>
+        </div>
+        <div class="formelement">
+            <label for="Phone">Phone Number *</label>
+            <input type="text" id="Phoneno" name="Phone" maxlength="10" required>
+        </div>
+        <div class="formelement">
+            <label for="Password">Password *</label>
+            <input type="password" id="Password" name="Password" required>
+        </div>
+        <div class="formelement">
+            <label for="confirmpassword">Confirm Password *</label>
+            <input type="password" id="confirmpassword" name="confirmpassword" required>
+        </div>
+    </div>
+    <input type="submit" id="submitbutton">
+</body>
+<script>
+    var errormessage = "";
+    var missingfields = "";
+    function isEmail(email) {
+        var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+    }
+
+$("#submitbutton").click(function(){
+    errormessage= "";
+    missingfields= "";
+    
+    if($("#Email").val()==""){
+        missingfields +="<p>Email is required.</p>"
+    }
+    
+    if($("#Phone").val()==""){
+        missingfields +="<p> Phone is required.</p>"
+    }
+
+    if($("#Password").val()==""){
+        missingfields +="<p> password is required.</p>"
+    }
+
+    if($("#confirmpassword").val()==""){
+        missingfields +="<p>Conform password is required.</p>"
+    }
+
+    if(isEmail($("#Email").val())==false){
+        errormessage +="<p>Plase enter a valid email address.</p>";
+    }
+
+    if($.isNumeric($("#Phoneno").val())==false){
+        errormessage +="<p> Please enter the vaild phoneno</p>"
+    }
+
+    if($("#Password").val() != $("#confirmpassword").val()){
+        errormessage +="<p> Password and confirm password do not mactch.</p>"
+    }
+
+    if(errormessage==""&& missingfields==""){
+        alert("form submitted successfully!");
+    }
+    else{
+        $("#error").html(errormessage+missingfields);
+    }
+});
+</script>
+
+</html>
